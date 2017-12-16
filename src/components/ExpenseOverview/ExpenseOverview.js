@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import ExpenseList from "../ExpenseList/ExpenseList";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import constants from "../../css/constants.css";
+import styles from "../../css/expenselist.css";
+import {AppBar} from "material-ui";
+import ExpenseDashboard from "../ExpenseDashboard/ExpenseDashboard";
 
 var ExpenseStoreActions = require('../../actions/ExpenseStoreActions');
 var ExpenseStore = require('../../stores/ExpenseStore');
@@ -28,10 +32,15 @@ class ExpenseOverview extends Component {
     render() {
         return (
             <MuiThemeProvider>
-                <div class="container-fluid">
+                <div>
                     <div class="row">
-                        <div class="col-md-3 no-float"><ExpenseList data={ this.state.expenses }/></div>
-                        <div class="col-md-9 no-float">Content</div>
+                        <AppBar className={styles.navBar}
+                            title={<span style={styles.title}>Expense Tracker</span>}
+                        />
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-md-3"><ExpenseList data={ this.state.expenses }/></div>
+                        <div class="col-md-9"><ExpenseDashboard data={ this.state.expenses } /></div>
                     </div>
                 </div>
             </MuiThemeProvider>

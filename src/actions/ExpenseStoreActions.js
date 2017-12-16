@@ -20,6 +20,11 @@ export function getExpenses(){
         .catch(function (error) {
             console.log(error);
         });
+};
 
-
+export function filterExpenses(filterValue){
+    AppDispatcher.handleExpenseAction({
+        actionType: ExpenseStoreConstants.FILTER_EXPENSES,
+        data: {"filter": filterValue}
+    });
 };

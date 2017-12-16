@@ -1,3 +1,8 @@
-:global(:root){
-    --primary-color: #333333;
+:global(:root) {
+    --amount-pos: #009b00;
+    --amount-neg: #9b0000;
+
+    --primary-color:#303f9f;
+    --secundary-color:#3f51B5
+
 }

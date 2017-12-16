@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ExpenseListItem from "../ExpenseListItem/ExpenseListItem";
-import {Subheader, List} from "material-ui";
+import {Subheader, List, AutoComplete} from "material-ui";
+import ExpenseFilter from "../ExpenseFilter/ExpenseFilter";
+import styles from "../../css/expenselist.css";
 
 class ExpenseList extends Component {
     render() {
@@ -12,11 +14,12 @@ class ExpenseList extends Component {
             )
         });
         return (
-
-            <List>
-                <Subheader>Selectable Contacts</Subheader>
-            { expenses }
-            </List>
+            <div className={styles.expenseList}>
+                <ExpenseFilter data={this.props.data} />
+                <List>
+                { expenses }
+                </List>
+            </div>
 
         )
     }

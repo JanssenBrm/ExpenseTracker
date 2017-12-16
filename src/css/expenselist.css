@@ -1,4 +1,30 @@
 .listAmount{
-    font-weight:bold;
-    text-align:right;
+    float:right;
+}
+.listAmountPos{
+    composes: listAmount;
+    color: var(--amount-pos);
+}
+
+.listAmountNeg{
+    composes: listAmount;
+    color: var(--amount-neg);
+}
+
+.expenseList{
+    background-color: #fafafa;
+    padding: 1rem;
+}
+
+.navBar{
+    padding-left:40px !important;
+}
+
+
+.primaryColor{
+    color: var(--primary-color);
+}
+
+.dashboard{
+    padding: 1rem;
 }

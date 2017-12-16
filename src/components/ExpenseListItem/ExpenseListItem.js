@@ -16,7 +16,7 @@ class ExpenseListItem extends Component {
                 <ListItem
                     value={3}
                     primaryText={
-                        <p>{this.props.expense.title || "Expense"}<span className="styles.listAmount">{this.props.expense .amount}</span></p>
+                        <p>{this.props.expense.title || "Expense"}<span className={parseInt(this.props.expense.amount) > 0 ? styles.listAmountPos : styles.listAmountNeg}>{this.props.expense.amount}</span></p>
                     }
                     secondaryText={
                         <p>{this.props.expense.date} <span dangerouslySetInnerHTML={this.rawMarkup()}/></p>

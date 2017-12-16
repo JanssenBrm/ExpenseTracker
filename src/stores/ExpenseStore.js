@@ -3,18 +3,24 @@ var EventEmitter = require('events').EventEmitter;
 var merge = require('merge');
 var ExpenseStoreActions = require('../constants/ExpenseStoreConstants');
 
-var _expenses = [];
+var expenseList = [];
+var expenseActionResult = [];
 
 
 function setExpenses(data){
-    _expenses = data.expenses;
-    console.log("EXPENSE STORE - Loaded new expenses", _expenses);
+    expenseList = data.expenses;
+    console.log("EXPENSE STORE - Loaded new expenses", expenseList);
+    return expenseList;
+}
+
+function filterExpenses(data){
+    return expenseList.filter(expense =>{ return expense.title.toUpperCase().includes(data.filter.toUpperCase()) || expense.amount.toUpperCase().includes(data.filter.toUpperCase()) || expense.description.toUpperCase().includes(data.filter.toUpperCase())});
 }
 
 var ExpenseStore = merge(EventEmitter.prototype, {
 
     getExpenses(){
-        return _expenses;
+        return expenseActionResult;
     },
 
     emitChange: function(){
@@ -37,7 +43,10 @@ AppDispatcher.register(function(payload){
 
     switch(action.actionType){
         case ExpenseStoreActions.LOAD_EXPENSES:
-            setExpenses(action.data);
+            expenseActionResult = setExpenses(action.data);
+            break;
+        case ExpenseStoreActions.FILTER_EXPENSES:
+            expenseActionResult = filterExpenses(action.data);
             break;
         default:
             return true;
