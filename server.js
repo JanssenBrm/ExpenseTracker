@@ -38,7 +38,7 @@ router.route('/expenses')
       Expense.find(function(err, expenses){
           if(err)
               res.send(err);
-          res.send(expenses);
+          res.send(expenses.map(expense => { expense.amount = expense.amount.replace(',', '.'); return expense;}));
       })
   });
 

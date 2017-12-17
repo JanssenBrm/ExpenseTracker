@@ -6,6 +6,15 @@ import styles from "../../css/expenselist.css";
 
 
 class ExpenseListItem extends Component {
+
+    constructor(props) {
+        super(props);
+        this.listItemSelected = this.listItemSelected.bind(this);
+    }
+
+    listItemSelected(event){
+        console.log("Selected " + this.props.expense.title);
+    }
     rawMarkup() {
         let rawMarkup = marked(this.props.children.toString());
         return { __html: rawMarkup };
@@ -14,9 +23,10 @@ class ExpenseListItem extends Component {
         return (
             <div>
                 <ListItem
+                    onClick={this.listItemSelected}
                     value={3}
                     primaryText={
-                        <p>{this.props.expense.title || "Expense"}<span className={parseInt(this.props.expense.amount) > 0 ? styles.listAmountPos : styles.listAmountNeg}>{this.props.expense.amount}</span></p>
+                        <p>{this.props.expense.title || "Expense"}<span className={parseFloat(this.props.expense.amount) > 0 ? styles.listAmountPos : styles.listAmountNeg}>{this.props.expense.amount}</span></p>
                     }
                     secondaryText={
                         <p>{this.props.expense.date} <span dangerouslySetInnerHTML={this.rawMarkup()}/></p>

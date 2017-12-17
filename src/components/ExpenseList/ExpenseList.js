@@ -5,6 +5,7 @@ import ExpenseFilter from "../ExpenseFilter/ExpenseFilter";
 import styles from "../../css/expenselist.css";
 
 class ExpenseList extends Component {
+
     render() {
         let expenses = this.props.data.map(expense => {
             return (

@@ -28,3 +28,23 @@
 .dashboard{
     padding: 1rem;
 }
+
+.graph{
+    margin-bottom: 1rem;
+}
+
+.emphasis{
+    font-size:xx-large;
+    font-weight:bold;
+}
+
+.summary{
+    background-color: #fafafa;
+    padding: 1rem;
+    margin:1rem 0;
+    text-align:center;
+}
+.subtitle{
+    font-size:x-small;
+    font-style: italic;
+}
