@@ -1,39 +1,57 @@
 import React, { Component } from 'react';
 import marked from 'marked';
-import {Avatar, Divider, ListItem} from "material-ui";
+import {Avatar, Dialog, Divider, FlatButton, ListItem} from "material-ui";
 import {ActionPayment} from "material-ui/svg-icons/index";
 import styles from "../../css/expenselist.css";
+import ExpenseDialog from "../ExpenseDialog";
 
 
 class ExpenseListItem extends Component {
 
+    state = {
+        selected: false,
+    };
+
+
     constructor(props) {
         super(props);
         this.listItemSelected = this.listItemSelected.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
     listItemSelected(event){
-        console.log("Selected " + this.props.expense.title);
+        this.setState({selected: true});
+    }
+    closeDialog(event){
+        this.setState({selected: false});
     }
     rawMarkup() {
         let rawMarkup = marked(this.props.children.toString());
         return { __html: rawMarkup };
     }
     render() {
+
         return (
             <div>
                 <ListItem
                     onClick={this.listItemSelected}
                     value={3}
                     primaryText={
-                        <p>{this.props.expense.title || "Expense"}<span className={parseFloat(this.props.expense.amount) > 0 ? styles.listAmountPos : styles.listAmountNeg}>{this.props.expense.amount}</span></p>
+                        <span>{this.props.expense.title || "Expense"}<span className={parseFloat(this.props.expense.amount) > 0 ? styles.listAmountPos : styles.listAmountNeg}>{this.props.expense.amount}</span></span>
                     }
                     secondaryText={
-                        <p>{this.props.expense.date} <span dangerouslySetInnerHTML={this.rawMarkup()}/></p>
+
+                        <p>{this.props.expense.date} <span dangerouslySetInnerHTML={this.rawMarkup()}/><br />
+                        No categories</p>
                     }
-                    secondaryTextLines={5}
+                    secondaryTextLines={8}
                     leftAvatar={<Avatar icon={<ActionPayment />}/>}
+
                 />
+               <ExpenseDialog  expense={ this.props.expense } selected={this.state.selected} closeDialog={() => {this.closeDialog()}}>
+                   { this.props.expense.description}
+               </ExpenseDialog>
+
                 <Divider/>
             </div>
         )

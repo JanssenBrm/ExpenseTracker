@@ -10,7 +10,8 @@ var ExpenseSchema = new Schema({
     date: String,
     title: String,
     amount: String,
-    description: String
+    description: String,
+    categories:  { type : Array , "default" : [] }
 });
 
 //export our module to use in server.js

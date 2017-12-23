@@ -9,12 +9,15 @@ var expenseActionResult = [];
 
 function setExpenses(data){
     expenseList = data.expenses;
-    console.log("EXPENSE STORE - Loaded new expenses", expenseList);
     return expenseList;
 }
 
 function filterExpenses(data){
     return expenseList.filter(expense =>{ return expense.title.toUpperCase().includes(data.filter.toUpperCase()) || expense.amount.toUpperCase().includes(data.filter.toUpperCase()) || expense.description.toUpperCase().includes(data.filter.toUpperCase())});
+}
+
+function saveExpense(data){
+    return expenseList.map(expense => { return expense._id == data.expense._id ? data.expense : expense});
 }
 
 var ExpenseStore = merge(EventEmitter.prototype, {
@@ -47,6 +50,9 @@ AppDispatcher.register(function(payload){
             break;
         case ExpenseStoreActions.FILTER_EXPENSES:
             expenseActionResult = filterExpenses(action.data);
+            break;
+        case ExpenseStoreActions.SAVE_EXPENSE:
+            expenseActionResult = saveExpense(action.data);
             break;
         default:
             return true;

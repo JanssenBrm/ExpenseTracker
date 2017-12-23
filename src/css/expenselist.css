@@ -48,3 +48,47 @@
     font-size:x-small;
     font-style: italic;
 }
+
+.chip{
+    margin: 0 .2rem !important
+}
+
+.expenseTable{
+    width:100%;
+}
+
+.categoryList{
+    display:flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.statusMessage{
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+.error{
+    composes: statusMessage;
+    color:red;
+}
+
+.loading{
+    composes: statusMessage;
+    position:relative;
+}
+
+.ok{
+    composes: statusMessage;
+    color:green;
+}
+.icon{
+    margin-right: .5rem;
+}
+
+.errorIcon{
+    composes: icon;
+}
+.doneIcon{
+    composes: icon;
+}

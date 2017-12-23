@@ -28,3 +28,19 @@ export function filterExpenses(filterValue){
         data: {"filter": filterValue}
     });
 };
+
+export function saveExpense(expense){
+
+    return axios.put('/api/expenses/' + expense._id, expense)
+        .then(response => {
+            AppDispatcher.handleExpenseAction({
+                actionType: ExpenseStoreConstants.SAVE_EXPENSE,
+                data: {"expense": expense}
+            });
+            return "OK";
+        })
+        .catch(error => {
+            console.log("ERROR", error);
+            return error;
+        });
+}

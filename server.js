@@ -15,8 +15,6 @@ mongoose.connect('mongodb://localhost:27017/expensetracking', {
     useMongoClient: true
 });
 
-console.log(mongoose);
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -33,14 +31,33 @@ router.get('/', function(req, res) {
 res.json({ message: 'API Initialized!'});
 });
 
-router.route('/expenses')
-  .get(function(req, res){
-      Expense.find(function(err, expenses){
-          if(err)
-              res.send(err);
-          res.send(expenses.map(expense => { expense.amount = expense.amount.replace(',', '.'); return expense;}));
-      })
-  });
+router.get('/expenses', function(req, res){
+    Expense.find(function(err, expenses) {
+        if (err)
+            res.send(err);
+        res.send(expenses.map(expense => {
+            expense.amount = expense.amount.replace(',', '.');
+            return expense;
+        }));
+    });
+});
+
+router.put('/expenses/:expenseId', function(req, res){
+    console.log("Updating expense with ID:", req.params.expenseId);
+    Expense.findById(req.params.expenseId, function(err, expense){
+        if(err)
+            res.send(err);
+        else{
+           expense.categories = req.body.categories;
+           expense.save(function(err){
+               if(err)
+                   res.send(err);
+               else
+                   res.send('OK');
+           });
+        }
+    });
+});
 
 
 app.use('/api', router);
