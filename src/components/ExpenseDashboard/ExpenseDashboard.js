@@ -94,12 +94,49 @@ class ExpenseDashboard extends Component {
 
     }
 
+    getCategoryStats(expenses) {
+        var stats = [];
+
+        if (expenses.length > 0) {
+
+            if (expenses.length == 1) {
+                stats.push(expenses[0].categories.map(category => {return {key: category, amount: expenses[0].amount}}));
+
+            } else {
+                expenses.map(expense => {
+                    var amount = Math.abs(parseFloat(expense.amount));
+                    if(expense.categories.length > 0)
+                        return expense.categories.map(category => {return {category, amount: amount}});
+                    else{
+                        return [{category: "Others", amount: amount}];
+                    }
+                }).reduce((categories, categoryList) => {
+                    console.log("Categories", categories);
+                    categoryList.forEach(category =>{
+                        stats[category.category] = stats[category.category] || 0;
+                        stats[category.category] += category.amount;
+                    });
+                    return categories;
+                });
+
+                stats = Object.keys(stats).map(key => {
+                    return {key: key, total: stats[key]};
+                });
+            }
+
+            console.log("Category stats: ", stats);
+
+        }
+        return stats;
+
+    }
+
     render() {
 
         var monthly_total_stats = this.getMonthlyTotalStats(this.props.data);
         var monthly_total_stats_options = {
             title: "Monthly statistics",
-            subtitle: "Overview of the monthly total costs",
+            subtitle: "Overview of the monthly total savings",
             value: { name: "total", color: "#8884d8"}
         };
         var monthly_stats = this.getMonthlyStats(this.props.data);
@@ -107,6 +144,13 @@ class ExpenseDashboard extends Component {
             title: "Monthly income/expenses",
             subtitle: "Overview of the monthly incomes vs. expenses",
             value1: { name: "income", color: "green"}, value2: {name: "expense", color: "red"}
+        };
+
+        var category_stats = this.getCategoryStats(this.props.data);
+        var category_stats_options = {
+            title: "Category statistics",
+            subtitle: "Overview of the categories",
+            value: { name: "total", color: "#8884d8"}
         };
 
         var monthly_saving = 0;
@@ -163,6 +207,9 @@ class ExpenseDashboard extends Component {
                 <div class="row">
                     <div class="col-md-6">
                         <ExpenseGraph data={monthly_stats} type="doublebar" graphOptions={monthly_stats_options} />
+                    </div>
+                    <div class="col-md-6">
+                        <ExpenseGraph data={category_stats} type="pie" graphOptions={category_stats_options} />
                     </div>
                 </div>
 

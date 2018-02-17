@@ -13,7 +13,7 @@ function setExpenses(data){
 }
 
 function filterExpenses(data){
-    return expenseList.filter(expense =>{ return expense.title.toUpperCase().includes(data.filter.toUpperCase()) || expense.amount.toUpperCase().includes(data.filter.toUpperCase()) || expense.description.toUpperCase().includes(data.filter.toUpperCase())});
+    return expenseList.filter(expense =>{ return expense.title.toUpperCase().includes(data.filter.toUpperCase()) || expense.amount.toUpperCase().includes(data.filter.toUpperCase()) || expense.description.toUpperCase().includes(data.filter.toUpperCase()) || expense.date.toUpperCase().includes(data.filter.toUpperCase())});
 }
 
 function saveExpense(data){

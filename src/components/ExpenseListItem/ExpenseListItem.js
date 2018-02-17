@@ -42,7 +42,7 @@ class ExpenseListItem extends Component {
                     secondaryText={
 
                         <p>{this.props.expense.date} <span dangerouslySetInnerHTML={this.rawMarkup()}/><br />
-                        No categories</p>
+                            {this.props.expense.categories? this.props.expense.categories.join(', ') : "No categories"}</p>
                     }
                     secondaryTextLines={8}
                     leftAvatar={<Avatar icon={<ActionPayment />}/>}
